@@ -1,7 +1,7 @@
 #import everything we need
 import socket
 import time
-import cv2
+import cv2 as cv
 import numpy as np
 import os
 
@@ -15,7 +15,7 @@ UDP_IP = "10.51.15.2"
 UDP_PORT = 5800
 
 #assign opencv camera to camera0
-boilercam = cv2.VideoCapture(0)
+boilercam = cv.VideoCapture(0)
 #set propid(3, meaning camera width) to 160
 boilercam.set(3, 160)
 #set propid(4, meaing camera height) to 120
@@ -32,15 +32,15 @@ def getOffsetsBoiler():
 	#convert our color data from standard RGB to HSV
 	#HSV stands for hue saturation value
 	#see here https://en.wikipedia.org/wiki/HSL_and_HSV
-	hsv = cv2.cvtColor(frame, cv2.COLOR_RGB2HSV)
+	hsv = cv.cvtColor(frame, cv.COLOR_RGB2HSV)
 	#specify the lowest and highest colors we could possibly want
 	lower = np.array([35, 100, 150])
 	upper = np.array([75, 255, 220])
 	#take out any frame data that IS NOT within our defined range
-	thresh = cv2.inRange(hsv, lower, upper)
+	thresh = cv.inRange(hsv, lower, upper)
 	#create contours, see here 
 	#http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_contours/py_contours_begin/py_contours_begin.html#contours-getting-started
-	contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+	contours, hierarchy = cv.findContours(thresh, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
 
 	#initialize some variables for later
 	maxarea = 0
@@ -52,7 +52,7 @@ def getOffsetsBoiler():
 	pixelOffsetY = 0
 	#within our list of contours
 	for c in contours:
-		m = cv2.moments(c)
+		m = cv.moments(c)
 		#keep going down the list and find the biggest possible one.
 		#once the biggest one is found, assume that is our target
 		if m['m00'] > maxarea:
