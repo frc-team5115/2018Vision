@@ -15,7 +15,7 @@ UDP_IP = "10.51.15.2"
 UDP_PORT = 5803
 roborio = (UDP_IP, UDP_PORT)
 #define video stream
-stream = 10.51.15.30:8080/?action=stream
+stream = "10.51.15.30:8080/?action=stream"
 #assign opencv camera to URL
 boilercam = cv.VideoCapture(stream)
 #set propid(3, meaning camera width) to 160
