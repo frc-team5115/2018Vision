@@ -12,10 +12,12 @@ logging.basicConfig(level=logging.DEBUG)
 #define our UDP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 UDP_IP = "10.51.15.2"
-UDP_PORT = 5800
-
-#assign opencv camera to camera0
-boilercam = cv.VideoCapture(0)
+UDP_PORT = 5803
+roborio = (UDP_IP, UDP_PORT)
+#define video stream
+stream = 10.51.15.30:8080/?action=stream
+#assign opencv camera to URL
+boilercam = cv.VideoCapture(stream)
 #set propid(3, meaning camera width) to 160
 boilercam.set(3, 160)
 #set propid(4, meaing camera height) to 120
@@ -82,8 +84,12 @@ while True:
 	#print str(x)
 	#print str(y)
 	#print str(gear)
-	sock.sendto(("x " + x), (UDP_IP, UDP_PORT))
-	sock.sendto(("y " + y), (UDP_IP, UDP_PORT))
+	s
+	x = "x " + str(x)
+	y = "y " + str(y)
+	
+	sock.sendto(x, roborio)
+	sock.sendto(y, roborio)
 
 	nowTime = time.clock()
 	#print 1 / (nowTime - lastTime)
